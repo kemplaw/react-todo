@@ -1,0 +1,7 @@
+.todo-wrapper {
+  margin: 150px auto;
+  padding: 15px 25px;
+  width: 400px;
+  border-radius: 4px;
+  box-shadow: 1px 1px 10px 2px rgba(0, 0, 0, 0.2);
+}
