@@ -1,0 +1,5 @@
+export const UPDATE_TODO = 'UPDATE_TODO'
+export const FILL_TODO_LIST = 'FILL_TODO_LIST'
+export const REMOVE_COMPLETED_TODO = 'REMOVE_COMPLETED_TODO'
+export const REMOVE_TODO = 'REMOVE_TODO'
+export const ADD_TODO = 'ADD_TODO'

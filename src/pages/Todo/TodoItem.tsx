@@ -1,3 +1,5 @@
-export default function TodoItem() {
-  return <div>todo item</div>
+import { Todo } from '../../types'
+
+export default function TodoItem(props: Todo) {
+  return <div>{props.content}</div>
 }
