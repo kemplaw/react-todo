@@ -1,11 +1,14 @@
-import { UserInfo } from '../../types'
 import { Action } from 'redux'
 import { UPDATE_USER } from '../actions/types'
+export interface UserReducerState {
+  username: string
+  expire: number
+}
 
 export function userReducer(
-  state: UserInfo = { username: '', expire: 0 },
+  state: UserReducerState = { username: '', expire: 0 },
   actions: Action & { [key: string]: any }
-): UserInfo {
+): UserReducerState {
   switch (actions.type) {
     case UPDATE_USER:
       return {

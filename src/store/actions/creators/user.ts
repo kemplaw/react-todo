@@ -1,11 +1,11 @@
-import { UserInfo } from '../../../types'
 import { Action } from 'redux'
+import { UserReducerState } from '../../reducers'
 import { UPDATE_USER } from '../types'
 
 export function updateUser(
-  userInfo: UserInfo
+  userInfo: UserReducerState
 ): Action<string> & {
-  data: UserInfo
+  data: UserReducerState
 } {
   return {
     type: UPDATE_USER,

@@ -20,8 +20,3 @@ export enum TabFilterStatus {
   active = 2,
   completed = 3
 }
-
-export interface UserInfo {
-  username: string
-  expire: number
-}

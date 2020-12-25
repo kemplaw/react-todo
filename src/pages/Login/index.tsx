@@ -1,10 +1,16 @@
+import { Dispatch } from 'react'
+import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { Action } from 'redux'
+import { updateUser } from '../../store/actions/creators'
+import { UserReducerState } from '../../store/reducers'
 import styles from './Login.module.css'
 
-export default function Login() {
+function Login({ dispatch }: { dispatch: Dispatch<Action<string> & { data: UserReducerState }> }) {
   const history = useHistory()
 
   const handleValidate = () => {
+    dispatch(updateUser({ username: 'kemp', expire: Date.now() + 3600 * 1000 * 7 * 24 }))
     history.push('/app')
   }
 
@@ -25,3 +31,5 @@ export default function Login() {
     </form>
   )
 }
+
+export default connect()(Login)

@@ -1,7 +1,13 @@
-import { Todo } from '../../../types'
 import { Dispatch } from 'react'
 import { Action, ActionCreator } from 'redux'
-import { FILL_TODO_LIST, REMOVE_COMPLETED_TODO, REMOVE_TODO, UPDATE_TODO, ADD_TODO } from '../types'
+import { Todo, TodoStatus } from '../../../types'
+import {
+  FILL_TODO_LIST,
+  REMOVE_COMPLETED_TODO,
+  REMOVE_TODO,
+  UPDATE_TODO_STATUS,
+  ADD_TODO
+} from '../types'
 
 let todoId = 1
 
@@ -15,10 +21,13 @@ export function addTodo(todo: Todo): Action<string> & { todo: Todo } {
   }
 }
 
-export function updateTodo(todo: Todo): Action<string> & { todo: Todo } {
+export function updateTodoStatus(
+  todoId: number,
+  todoStatus: TodoStatus
+): Action<string> & { data: { todoId: number; todoStatus: TodoStatus } } {
   return {
-    type: UPDATE_TODO,
-    todo
+    type: UPDATE_TODO_STATUS,
+    data: { todoId, todoStatus }
   }
 }
 
@@ -30,11 +39,15 @@ function fillTodoList(todoList: Todo[]): Action<string> & { todoList: Todo[] } {
 }
 
 export function fetchTodoList() {
-  return (dispatch: Dispatch<Action & { todoList: Todo[] }>) => {
-    dispatch(fillTodoList([]))
+  return (dispatch: Dispatch<Action<string> & { todoList: Todo[] }>) => {
+    setTimeout(() => {
+      dispatch(fillTodoList([]))
+    }, 500)
   }
 }
 
 export const removeTodo: ActionCreator<Action> = (todoId: number) => ({ type: REMOVE_TODO, todoId })
 
-export const removeCompletedTodo: ActionCreator<Action> = () => ({ type: REMOVE_COMPLETED_TODO })
+export function removeCompletedTodo(dispatch: Dispatch<Action<string>>) {
+  return dispatch({ type: REMOVE_COMPLETED_TODO })
+}

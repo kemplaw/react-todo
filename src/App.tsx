@@ -1,12 +1,13 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import store from './store'
+import { store } from './store'
 import './App.css'
+import AuthRoute from './components/AuthRoute'
 
 const Login = lazy(() => import(/* webpackChunkName: "login-view" */ './pages/Login'))
 const TodoContainer = lazy(
-  () => import(/* webpackChunkName: "todo-container-view" */ './pages/Todo/TodoContainer')
+  () => import(/* webpackChunkName: "todo-container-view" */ './pages/Todo')
 )
 
 function App() {
@@ -21,9 +22,9 @@ function App() {
                 <Route path='/login'>
                   <Login />
                 </Route>
-                <Route path='/app'>
+                <AuthRoute path='/app'>
                   <TodoContainer />
-                </Route>
+                </AuthRoute>
                 <Route path='/' exact>
                   <Redirect to='/app' />
                 </Route>

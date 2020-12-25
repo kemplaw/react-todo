@@ -3,10 +3,11 @@ import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 import { todoReducer, userReducer } from './reducers'
 
-export default createStore(
-  combineReducers({
-    todoReducer,
-    userReducer
-  }),
-  applyMiddleware(thunk, logger)
-)
+const rootReducer = combineReducers({
+  todo: todoReducer,
+  user: userReducer
+})
+
+export const store = createStore(rootReducer, applyMiddleware(thunk, logger))
+
+export type RootState = ReturnType<typeof rootReducer>

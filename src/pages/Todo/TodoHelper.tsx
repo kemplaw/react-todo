@@ -3,7 +3,7 @@ import { Todo, TodoStatus } from '../../types'
 
 interface TodoHelperPropsDefine {
   todoList: Todo[]
-  onClearAllCompletedTodo: () => void
+  onClearCompleted: () => void
 }
 
 export default function TodoHelper(props: TodoHelperPropsDefine) {
@@ -12,13 +12,17 @@ export default function TodoHelper(props: TodoHelperPropsDefine) {
   const unCompletedTodoLength = useMemo(() => {
     if (!props.todoList || !props.todoList.length) return 0
 
-    return props.todoList.map(todo => todo.status === TodoStatus.unCompleted).length
+    return props.todoList.filter(todo => todo.status === TodoStatus.unCompleted).length
   }, [props.todoList])
+
+  function handleClick() {
+    props.onClearCompleted()
+  }
 
   return (
     <div>
       <span>{unCompletedTodoLength} todo items left</span>
-      <button type='button' onClick={props.onClearAllCompletedTodo}>
+      <button type='button' onClick={handleClick}>
         clear
       </button>
     </div>
