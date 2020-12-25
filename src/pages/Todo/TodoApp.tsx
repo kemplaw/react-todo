@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { TabItem } from '../../components/TabGroup'
 import TabGroup from '../../components/TabGroup/TabGroup'
 import { Tab, TabFilterStatus, Todo, TodoStatus } from '../../types'
@@ -51,6 +51,10 @@ export default function TodoApp(props: any) {
     // eslint-disable-next-line
   }, [])
 
+  const handleClearCompleted = useCallback(() => props.removeCompletedTodo, [
+    props.removeCompletedTodo
+  ])
+
   return (
     <div className={styles['todo-wrapper']}>
       <TabGroup onChange={handleChangeTabFilter}>
@@ -65,7 +69,7 @@ export default function TodoApp(props: any) {
         <TodoItem key={todo.id} todo={todo} onToggle={props.updateTodoStatus} />
       ))}
 
-      <TodoHelper todoList={props.todoList} onClearCompleted={props.removeCompletedTodo} />
+      <TodoHelper todoList={props.todoList} onClearCompleted={handleClearCompleted} />
     </div>
   )
 }
