@@ -1,25 +1,30 @@
+import { memo, useCallback } from 'react'
+
 interface TodoInputPropsDefine {
   placeholder?: string
   onEnter: (value: any) => void
 }
 
-export default function TodoInput(props: TodoInputPropsDefine) {
+export default memo(function TodoInput({ onEnter, placeholder }: TodoInputPropsDefine) {
   console.log('render input')
 
-  function handlePressEnter(e: any) {
-    if (e.key.toLowerCase() === 'enter') {
-      props.onEnter(e.target.value)
-      e.target.value = ''
-    }
-  }
+  const handlePressEnter = useCallback(
+    (e: any) => {
+      if (e.key.toLowerCase() === 'enter') {
+        onEnter(e.target.value)
+        e.target.value = ''
+      }
+    },
+    [onEnter]
+  )
 
   return (
     <div>
       <input
         type='text'
-        placeholder={props.placeholder || 'input something'}
+        placeholder={placeholder || 'input something'}
         onKeyUp={handlePressEnter}
       />
     </div>
   )
-}
+})

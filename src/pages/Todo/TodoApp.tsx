@@ -11,6 +11,7 @@ export default function TodoApp(props: any) {
   console.log('render')
   console.log(props)
 
+  const { addTodo, removeCompletedTodo } = props
   const [tabFilterStatus, setTabFilterStatus] = useState(TabFilterStatus.all)
   const tabs: Tab[] = [
     { id: TabFilterStatus.all, label: 'all' },
@@ -30,17 +31,20 @@ export default function TodoApp(props: any) {
     })
   }, [props.todoList, tabFilterStatus])
 
-  function handleAddTodo(value: any) {
-    if (!value) return
+  const handleAddTodo = useCallback(
+    (value: any) => {
+      if (!value) return
 
-    const todo: Todo = {
-      id: 0,
-      content: value,
-      status: TodoStatus.unCompleted,
-      userId: 1
-    }
-    props.addTodo(todo)
-  }
+      const todo: Todo = {
+        id: 0,
+        content: value,
+        status: TodoStatus.unCompleted,
+        userId: 1
+      }
+      addTodo(todo)
+    },
+    [addTodo]
+  )
 
   function handleChangeTabFilter(tabFilter: TabFilterStatus) {
     setTabFilterStatus(tabFilter)
@@ -51,9 +55,7 @@ export default function TodoApp(props: any) {
     // eslint-disable-next-line
   }, [])
 
-  const handleClearCompleted = useCallback(() => props.removeCompletedTodo, [
-    props.removeCompletedTodo
-  ])
+  const handleClearCompleted = useCallback(() => removeCompletedTodo(), [removeCompletedTodo])
 
   return (
     <div className={styles['todo-wrapper']}>

@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 import { Todo, TodoStatus } from '../../types'
 
 interface TodoHelperPropsDefine {
@@ -6,18 +6,18 @@ interface TodoHelperPropsDefine {
   onClearCompleted: () => void
 }
 
-export default function TodoHelper(props: TodoHelperPropsDefine) {
+export default memo(function TodoHelper({ onClearCompleted, todoList }: TodoHelperPropsDefine) {
   console.log('render todo helper')
 
   const unCompletedTodoLength = useMemo(() => {
-    if (!props.todoList || !props.todoList.length) return 0
+    if (!todoList || !todoList.length) return 0
 
-    return props.todoList.filter(todo => todo.status === TodoStatus.unCompleted).length
-  }, [props.todoList])
+    return todoList.filter(todo => todo.status === TodoStatus.unCompleted).length
+  }, [todoList])
 
-  function handleClick() {
-    props.onClearCompleted()
-  }
+  const handleClick = useCallback(() => {
+    onClearCompleted()
+  }, [onClearCompleted])
 
   return (
     <div>
@@ -27,4 +27,4 @@ export default function TodoHelper(props: TodoHelperPropsDefine) {
       </button>
     </div>
   )
-}
+})
